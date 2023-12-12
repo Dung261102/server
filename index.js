@@ -6,13 +6,18 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 
 import posts from './routers/posts.js';
-// import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 // import dotenv from 'dotenv';
 
 // dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+
+// Lưu đường dẫn kết nối với mongodb
+const URI =
+    'mongodb+srv://admin:sCvxbMCCLoQKAkTj@cluster0.itgurbh.mongodb.net/?retryWrites=true&w=majority';
 
 // const URI = process.env.DATABASE_URL;
 
@@ -38,14 +43,15 @@ app.use('/posts', posts);
 //localhost:5000/posts
 
 
-// mongoose
-//   .connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
-//   .then(() => {
-//     console.log('Connected to DB');
-http: app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
-//   })
-//   .catch((err) => {
-//     console.log('err', err);
-//   });
+mongoose
+    .connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+        console.log('Connected to DB');
+        // Khi kết nối thành công thì mới chạy server
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.log('err', err);
+    });
