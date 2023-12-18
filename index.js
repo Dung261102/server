@@ -2,32 +2,46 @@ import express from 'express';
 
 //các midlleware (bodyParser và cors)
 // import bodyParser, { urlencoded } from 'body-parser';
-import bodyParser from 'body-parser';
 import cors from 'cors';
-
 import posts from './routers/posts.js';
 import mongoose from 'mongoose';
-// import dotenv from 'dotenv';
 
-// dotenv.config();
+//để sử dụng được các biến môi trường
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 
 // Lưu đường dẫn kết nối với mongodb
-const URI =
-    'mongodb+srv://admin:sCvxbMCCLoQKAkTj@cluster0.itgurbh.mongodb.net/?retryWrites=true&w=majority';
+// const URI =
+//     'mongodb+srv://admin:hhZ9ayA8MAuwfzFw@cluster0.itgurbh.mongodb.net/?retryWrites=true&w=majority';
 
-// const URI = process.env.DATABASE_URL;
+
+//Thay thế đường dẫn ở trên
+const URI = process.env.DATABASE_URL;
 
 
 //để có thể sử dụng được các midlleware
-app.use(bodyParser.json({ limit: '30mb' }));
-app.use(bodyParser.urlencoded({ extended: true, limit: '30mb' }));
+// app.use(bodyParser.json({ limit: '30mb' }));
+// app.use(bodyParser.urlencoded({ extended: true, limit: '30mb' }));
+
+
+//test
+// const cors = require('cors')
+// const corsOption = {
+//     origin: ['http://localhost:3000'],
+//     credentials: true,
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+// }
+// app.use(cors(corsOption))
+//hết phần test
+
 app.use(cors());
-// app.use(express.json({ limit: '30mb' }));
-// app.use(express.urlencoded({ extended: true, limit: '30mb' }));
+app.use(express.json({ limit: '30mb' }));
+app.use(express.urlencoded({ extended: true, limit: '30mb' }));
 
 //Ví dụ test thử midlleware
 // app.get('/', (req, res) => {
@@ -43,8 +57,9 @@ app.use('/posts', posts);
 //localhost:5000/posts
 
 
-mongoose
-    .connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
+
+mongoose.connect(URI)
+    // { useNewUrlParser: true, useUnifiedTopology: true }): Không cần vì nó luôn đúng với phiên bản mới hơn
     .then(() => {
         console.log('Connected to DB');
         // Khi kết nối thành công thì mới chạy server
