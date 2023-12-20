@@ -69,3 +69,21 @@ export const updatePost = async (req, res) => {
         res.status(500).json({ error: err });
     }
 };
+
+
+// Xóa bài post
+export const deletePost = async (req, res) => {
+    try {
+        const postId = req.params.id; // Lấy ID của bài viết từ request params
+
+        const deletedPost = await PostModel.findByIdAndDelete(postId);
+
+        if (!deletedPost) {
+            return res.status(404).json({ error: 'Bài viết không tồn tại' });
+        }
+
+        res.status(200).json({ message: 'Bài viết đã được xóa thành công', deletedPost });
+    } catch (err) {
+        res.status(500).json({ error: err });
+    }
+};
