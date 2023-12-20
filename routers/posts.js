@@ -1,5 +1,8 @@
 import express from 'express';
-import { getPosts, createPost, updatePost } from '../controllers/posts.js';
+import { getPosts, createPost, updatePost, deletePost } from '../controllers/posts.js';
+// import { getPosts, createPost, updatePost } from '../controllers/posts.js';
+
+
 
 
 const router = express.Router();
@@ -11,6 +14,7 @@ const router = express.Router();
 // });
 
 
+// Route để lấy tất cả bài post
 
 router.get('/', getPosts);
 
@@ -19,5 +23,8 @@ router.get('/', getPosts);
 router.post('/', createPost); //rout này sử dụng để lấy tất cả bài post, delete và update
 
 router.post('/update', updatePost);
+
+// Route để xóa bài viết
+router.delete('/:id', deletePost);
 
 export default router;
