@@ -25,7 +25,5 @@ const schema = new mongoose.Schema(
     },
     // Tự động thêm thời gian hiện tại
     { timestamps: true }
-
 );
-
 export const PostModel = mongoose.model('Post', schema);
