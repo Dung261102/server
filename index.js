@@ -15,6 +15,18 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 
+const pathUrl = process.env.Blog_URL || `http://localhost:${port}`;
+// const routesDir = new URL('./routes/', import.meta.url).pathname; // Xác định đường dẫn tới thư mục 'routes'
+
+// const swaggerJsDoc = require("swagger-jsdoc");
+// const swaggerUI = require("swagger-ui-express");
+
+import swaggerJsDoc from "swagger-jsdoc";
+import swaggerUI from "swagger-ui-express";
+
+
+
+
 // Lưu đường dẫn kết nối với mongodb
 // const URI =
 //     'mongodb+srv://admin:hhZ9ayA8MAuwfzFw@cluster0.itgurbh.mongodb.net/?retryWrites=true&w=majority';
@@ -70,3 +82,38 @@ mongoose.connect(URI)
     .catch((err) => {
         console.log('err', err);
     });
+
+
+// Swagger options
+const options = {
+    definition: {
+        openapi: "3.0.0",
+        info: {
+            title: "Library API",
+            version: "1.0.0",
+            description: "A simple Express Library API",
+        },
+        servers: [
+            {
+                url: pathUrl,
+            },
+        ],
+    },
+    // Specify the pathUrl to your route files with Swagger annotations
+    // apis: [`${__dirname}/routes/*.js`],
+
+    // apis: [`${routesDir}/*.js`],
+
+    apis: ['./routers/*.js'],
+};
+const specs = swaggerJsDoc(options);
+
+app.use("/", swaggerUI.serve, swaggerUI.setup(specs));
+
+// app.listen(port, '0.0.0.0', () => {
+//     console.log(`Server is running on port ${port}`);
+// });
+
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is running on port ${PORT}`);
+});
