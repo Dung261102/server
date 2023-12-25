@@ -12,7 +12,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 5000;
 
 
 const pathUrl = process.env.Blog_URL || `http://localhost:${port}`;
@@ -75,6 +75,7 @@ mongoose.connect(URI)
     .then(() => {
         console.log('Connected to DB');
         // Khi kết nối thành công thì mới chạy server
+
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`);
         });
