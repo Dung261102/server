@@ -70,21 +70,6 @@ app.use('/posts', posts);
 
 
 
-mongoose.connect(URI)
-    // { useNewUrlParser: true, useUnifiedTopology: true }): Không cần vì nó luôn đúng với phiên bản mới hơn
-    .then(() => {
-        console.log('Connected to DB');
-        // Khi kết nối thành công thì mới chạy server
-
-        app.listen(PORT, () => {
-            console.log(`Server is running on port ${PORT}`);
-        });
-    })
-    .catch((err) => {
-        console.log('err', err);
-    });
-
-
 // Swagger options
 const options = {
     definition: {
@@ -111,10 +96,15 @@ const specs = swaggerJsDoc(options);
 
 app.use("/", swaggerUI.serve, swaggerUI.setup(specs));
 
-// app.listen(port, '0.0.0.0', () => {
-//     console.log(`Server is running on port ${port}`);
-// });
+mongoose.connect(URI)
+    // { useNewUrlParser: true, useUnifiedTopology: true }): Không cần vì nó luôn đúng với phiên bản mới hơn
+    .then(() => {
+        console.log('Connected to DB');
 
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+        app.listen(PORT, '0.0.0.0', () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.log('err', err);
+    });
