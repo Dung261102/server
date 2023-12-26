@@ -22,7 +22,7 @@ router.get('/', getPosts);
 //Khi sử dụng method post, thì controller post sẽ được thực thi
 router.post('/', createPost); //rout này sử dụng để lấy tất cả bài post, delete và update
 
-router.post('/update', updatePost);
+router.put('/update', updatePost);
 
 // Route để xóa bài viết
 router.delete('/:id', deletePost);
